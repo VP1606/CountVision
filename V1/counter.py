@@ -2,9 +2,12 @@ import numpy as np
 import time
 import imutils
 import cv2
+from urllib.request import urlopen
+
+url = "http://192.168.0.155:8080/shot.jpg?rnd=955360"
 
 avg = None
-video = cv2.VideoCapture("./testH.mp4")
+#video = cv2.VideoCapture("./testH.mp4")
 xvalues = list()
 motion = list()
 count1 = 0
@@ -29,7 +32,10 @@ def find_majority(k):
 
 
 while 1:
-    ret, frame = video.read()
+    #ret, frame = video.read()
+    frameInput = urlopen(url)
+    frameProcessA = np.array(bytearray(frameInput.read()), dtype=np.uint8)
+    frame = cv2.imdecode(frameProcessA, -1)
     flag = True
     text = ""
 
@@ -93,5 +99,5 @@ while 1:
     if key == ord('q'):
         break
 
-video.release()
+#video.release()
 cv2.destroyAllWindows()
