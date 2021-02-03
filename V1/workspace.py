@@ -30,6 +30,7 @@ def find_majority(k):
 
     return maximum
 
+width = 500
 
 while 1:
     ret, frame = video.read()
@@ -40,8 +41,10 @@ while 1:
     text = ""
 
     frame = imutils.resize(frame, width=500)
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (21, 21), 0)
+    image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+
 
     if avg is None:
         print
@@ -49,51 +52,37 @@ while 1:
         avg = gray.copy().astype("float")
         continue
 
-    cv2.accumulateWeighted(gray, avg, 0.5)
-    frameDelta = cv2.absdiff(gray, cv2.convertScaleAbs(avg))
-    thresh = cv2.threshold(frameDelta, 5, 255, cv2.THRESH_BINARY)[1]
-    thresh = cv2.dilate(thresh, None, iterations=2)
-    (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    _, binary = cv2.threshold(gray, 50, 255, cv2.THRESH_BINARY_INV)
+
+    (cnts, _) = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     for c in cnts:
         if cv2.contourArea(c) < 5000:
             continue
         (x, y, w, h) = cv2.boundingRect(c)
         xvalues.append(x)
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 23), 2)
+
+        tolerance = 3
+
+        if (400 - tolerance) <= x <= (400 + tolerance):
+            print("CONTACT! XVAL: " + str(x) + " DELTA: " + str(400-x))
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
+            netCount += 1
+
+        else:
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 23), 2)
+
         flag = False
 
-    no_x = len(xvalues)
 
-    if (no_x > 2):
-        difference = xvalues[no_x - 1] - xvalues[no_x - 2]
-        if (difference > 0):
-            motion.append(1)
-        else:
-            motion.append(0)
-
-    if flag is True:
-        if (no_x > 5):
-            val, times = find_majority(motion)
-            if val == 1 and times >= 15:
-                count1 += 1
-                netCount += 1
-            else:
-                count2 += 1
-                netCount -= 1
-
-        xvalues = list()
-        motion = list()
-
-    cv2.line(frame, (260, 0), (260, 480), (0, 255, 0), 2)
-    cv2.line(frame, (420, 0), (420, 480), (0, 255, 0), 2)
+    cv2.line(frame, (400, 0), (400, 1000), (0, 255, 0), 2)
     cv2.putText(frame, "CAPRA LAKE COUNT AI 2021.04.05", (10, 20), cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255, 255), 2)
     cv2.putText(frame, "In: {}".format(count1), (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (116, 255, 23), 2)
-    cv2.putText(frame, "Out: {}".format(count2), (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (205, 23, 255), 2)
+    #cv2.putText(frame, "Out: {}".format(count2), (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (205, 23, 255), 2)
     cv2.putText(frame, "NET: {}".format(netCount), (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 23), 2)
     cv2.imshow("Frame", frame)
     cv2.imshow("Gray", gray)
-    cv2.imshow("FrameDelta", frameDelta)
+    cv2.imshow("Binary", binary)
 
     key = cv2.waitKey(1) & 0xFF
     if key == ord('q'):
