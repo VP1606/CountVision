@@ -24,13 +24,22 @@ class TrackItem:
     size: ()
 
 
-unsorted = []
 tracking: [TrackItem] = []
 
 ID_Count = 0
 
 deltaMin = 1
 deltaMax = 15
+
+def ValidContourCount(cnts):
+    count = 0
+
+    for c in cnts:
+        if cv2.contourArea(c) < 6000:
+            continue
+        count += 1
+
+    return count
 
 while 1:
     ret, frame = video.read()
@@ -48,111 +57,142 @@ while 1:
 
     (cnts, _) = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-    for c in cnts:
-        if cv2.contourArea(c) < 6000:
-            continue
-        (x, y, w, h) = cv2.boundingRect(c)
+    if ValidContourCount(cnts) == 0:
+        print("No Contours - Resetting Systems")
+        tracking = []
+        ID_Count = 0
 
-        tolerance = 4
+    else:
+        for c in cnts:
+            if cv2.contourArea(c) < 6000:
+                continue
+            (x, y, w, h) = cv2.boundingRect(c)
 
-        centreX = x + (w / 2)
+            tolerance = 4
 
-        movingRight = False
+            centreX = x + (w / 2)
 
-        contourID = 0
+            movingRight = False
 
-        sizeMargin = 40
+            contourID = 0
 
-        accentColor = (255, 255, 23)
+            sizeMargin = 25
 
-        sizeLock = False
+            accentColor = (255, 255, 23)
 
-        if tracking != []:
+            sizeLock = False
 
-            matched = False
+            distanceDelta = 0
 
-            for index, tracker in enumerate(tracking):
-                observedDelta = tracker.xPos - centreX
+            if tracking != []:
 
-                if ((tracker.size[0] - sizeMargin) <= x <= (tracker.size[0] + sizeMargin)) and (
-                        (tracker.size[1] - sizeMargin) <= y <= (tracker.size[1] + sizeMargin)) and (
-                        (tracker.size[2] - sizeMargin) <= w <= (tracker.size[2] + sizeMargin)) and (
-                        (tracker.size[3] - sizeMargin) <= h <= (tracker.size[3] + sizeMargin)):
-                    print("Size Match")
-                    sizeLock = True
-                    # Red Color
+                matched = False
 
-                if observedDelta < 0:
-                    movingRight = True
-                    print("Moving Right")
-                    observedDelta = observedDelta * -1
+                for index, tracker in enumerate(tracking):
+                    observedDelta = tracker.xPos - centreX
+                    distanceDelta = observedDelta
 
-                    if deltaMin <= observedDelta <= deltaMax:
-                        # Matched
-                        tracking[index].xPos = centreX
-                        contourID = tracker.ID
-                        matched = True
-                        accentColor = (0, 115, 255)
-                        # Orange Color
+                    print(observedDelta)
 
-                else:
-                    if deltaMin <= observedDelta <= deltaMax:
-                        # Matched
-                        tracking[index].xPos = centreX
-                        tracking[index].size = (x, y, w, h)
-                        contourID = tracker.ID
-                        matched = True
-                        accentColor = (0, 115, 255)
-                        # Orange Color
+                    if ((tracker.size[0] - sizeMargin) <= x <= (tracker.size[0] + sizeMargin)) and (
+                            (tracker.size[1] - sizeMargin) <= y <= (tracker.size[1] + sizeMargin)) and (
+                            (tracker.size[2] - sizeMargin) <= w <= (tracker.size[2] + sizeMargin)) and (
+                            (tracker.size[3] - sizeMargin) <= h <= (tracker.size[3] + sizeMargin)):
 
-            if matched is False:
+                        print("Size Match")
+                        sizeLock = True
+                        observedDelta = tracker.xPos - centreX
+                        distanceDelta = observedDelta
+                        # Red Color
+
+                    if observedDelta < 0:
+                        movingRight = True
+                        print("Moving Right")
+                        observedDelta = observedDelta * -1
+
+                        if deltaMin <= observedDelta <= deltaMax:
+                            # Matched
+                            tracking[index].xPos = centreX
+                            contourID = tracker.ID
+                            matched = True
+                            accentColor = (0, 115, 255)
+                            # Orange Color
+
+                            distanceDelta = observedDelta * -1
+
+                    else:
+                        movingRight = False
+                        if deltaMin <= observedDelta <= deltaMax:
+                            # Matched
+                            tracking[index].xPos = centreX
+                            tracking[index].size = (x, y, w, h)
+                            contourID = tracker.ID
+                            matched = True
+                            accentColor = (0, 115, 255)
+                            # Orange Color
+
+                            distanceDelta = observedDelta
+
+                if matched is False:
+                    # Add new Track Item
+                    tracking.append(TrackItem(ID_Count, centreX, (x, y, w, h)))
+                    contourID = ID_Count
+                    ID_Count += 1
+                    accentColor = (255, 0, 208)
+                    # Purple Color
+
+            else:
                 # Add new Track Item
                 tracking.append(TrackItem(ID_Count, centreX, (x, y, w, h)))
                 contourID = ID_Count
                 ID_Count += 1
                 accentColor = (255, 0, 208)
+
+
                 # Purple Color
 
-        else:
-            # Add new Track Item
-            tracking.append(TrackItem(ID_Count, centreX, (x, y, w, h)))
-            contourID = ID_Count
-            ID_Count += 1
-            accentColor = (255, 0, 208)
-            # Purple Color
+                def directionStr():
+                    if movingRight is True:
+                        return "POS +"
+                    else:
+                        return "NEG -"
 
-        if sizeLock is True:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            cv2.putText(frame, "ID: {}".format(contourID), (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+            if sizeLock is True:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                cv2.putText(frame, "ID: " + str(contourID) + " DIR: " + directionStr() + " DELTA: " + str(distanceDelta), (x, y - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
-        else:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), accentColor, 2)
-            cv2.putText(frame, "ID: {}".format(contourID), (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, accentColor, 2)
+            else:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), accentColor, 2)
+                cv2.putText(frame,
+                            "ID: " + str(contourID) + " DIR: " + directionStr() + " DELTA: " + str(distanceDelta),
+                            (x, y - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
-        if (400 - tolerance) <= centreX <= (400 + tolerance) and movingRight is True:
-            print("POS CONTACT! XVAL: " + str(x) + " TOTAL: " + str(netCount))
-            # cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
-            posCount += 1
-            netCount += 1
-
-
-        elif (100 - tolerance) <= centreX <= (100 + tolerance) and movingRight is False:
-            print("NEG CONTACT! XVAL: " + str(x) + " TOTAL: " + str(netCount))
-            # cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
-            negCount += 1
-            netCount -= 1
+            if (400 - tolerance) <= centreX <= (400 + tolerance):
+                print("POS CONTACT! XVAL: " + str(x) + " TOTAL: " + str(netCount))
+                # cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
+                posCount += 1
+                netCount += 1
 
 
-        else:
-            posDelta = 400 - centreX
-            negDelta = 100 - centreX
+            elif (100 - tolerance) <= centreX <= (100 + tolerance):
+                print("NEG CONTACT! XVAL: " + str(x) + " TOTAL: " + str(netCount))
+                # cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
+                negCount += 1
+                netCount -= 1
 
-            print("POS Delta: " + str(posDelta) + " NEG Delta: " + str(negDelta))
 
-            continue
-            # cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 23), 2)
+            else:
+                posDelta = 400 - centreX
+                negDelta = 100 - centreX
 
-        # flag = False
+                print("POS Delta: " + str(posDelta) + " NEG Delta: " + str(negDelta))
+
+                continue
+                # cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 23), 2)
+
+            # flag = False
 
     cv2.line(frame, (150, 0), (150, 1000), (0, 255, 0), 2)
     cv2.line(frame, (400, 0), (400, 1000), (0, 255, 0), 2)
