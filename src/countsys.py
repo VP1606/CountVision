@@ -10,9 +10,7 @@ url = "http://192.168.0.155:8080/shot.jpg?rnd=955360"
 
 video = cv2.VideoCapture("./testJ.mp4")
 
-posCount = 0
-negCount = 0
-netCount = 0
+count = 0
 
 width = 500
 
@@ -170,17 +168,9 @@ while 1:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
             if (400 - tolerance) <= centreX <= (400 + tolerance):
-                print("POS CONTACT! XVAL: " + str(x) + " TOTAL: " + str(netCount))
+                print("POS CONTACT! XVAL: " + str(x) + " TOTAL: " + str(count))
                 # cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
-                posCount += 1
-                netCount += 1
-
-
-            elif (100 - tolerance) <= centreX <= (100 + tolerance):
-                print("NEG CONTACT! XVAL: " + str(x) + " TOTAL: " + str(netCount))
-                # cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
-                negCount += 1
-                netCount -= 1
+                count += 1
 
 
             else:
@@ -197,16 +187,10 @@ while 1:
     cv2.line(frame, (150, 0), (150, 1000), (0, 255, 0), 2)
     cv2.line(frame, (400, 0), (400, 1000), (0, 255, 0), 2)
     cv2.putText(frame, "CAPRA LAKE COUNT AI 2021.04.05", (10, 20), cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255, 255), 2)
-    cv2.putText(frame, "POS: {}".format(posCount), (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (116, 255, 23), 2)
-    cv2.putText(frame, "NEG: {}".format(negCount), (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (205, 23, 255), 2)
-    cv2.putText(frame, "NET: {}".format(netCount), (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 23), 2)
 
     cv2.line(binary, (150, 0), (150, 1000), (255, 255, 255), 2)
     cv2.line(binary, (400, 0), (400, 1000), (255, 255, 255), 2)
     cv2.putText(binary, "CAPRA LAKE COUNT AI 2021.04.05", (10, 20), cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255, 255), 2)
-    cv2.putText(frame, "POS: {}".format(posCount), (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (116, 255, 23), 2)
-    cv2.putText(frame, "NEG: {}".format(negCount), (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (205, 23, 255), 2)
-    cv2.putText(binary, "NET: {}".format(netCount), (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 23), 2)
 
     # cv2.imshow("Gray", gray)
     cv2.imshow("Binary", binary)
