@@ -182,18 +182,19 @@ while 1:
                 continue
                 # cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 23), 2)
 
-            # flag = False
+    ft = cv2.freetype.createFreeType2()
+    ft.loadFontData(fontFileName='GothamBold.ttf', id=0)
 
-    cv2.line(frame, (150, 0), (150, 1000), (0, 255, 0), 2)
     cv2.line(frame, (400, 0), (400, 1000), (0, 255, 0), 2)
-    cv2.putText(frame, "CAPRA LAKE COUNT AI 2021.04.05", (10, 20), cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255, 255), 2)
+    ft.putText(img=frame, text="CAPRA LAKE COUNT VISION 2021.04.05", org=(10, 20), fontHeight=12, color=(255, 255, 255), thickness=-1, line_type=cv2.LINE_AA, bottomLeftOrigin=True)
+    ft.putText(img=frame, text="COUNT", org=(10, 100), fontHeight=20, color=(255, 255, 255), thickness=-1, line_type=cv2.LINE_AA, bottomLeftOrigin=True)
+    ft.putText(img=frame, text=str(count), org=(100, 100), fontHeight=50, color=(255, 255, 255), thickness=-1, line_type=cv2.LINE_AA, bottomLeftOrigin=True)
 
-    cv2.line(binary, (150, 0), (150, 1000), (255, 255, 255), 2)
-    cv2.line(binary, (400, 0), (400, 1000), (255, 255, 255), 2)
-    cv2.putText(binary, "CAPRA LAKE COUNT AI 2021.04.05", (10, 20), cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255, 255), 2)
+    #cv2.line(binary, (400, 0), (400, 1000), (255, 255, 255), 2)
+    #cv2.putText(binary, "CAPRA LAKE COUNT VISION 2021.04.05", (10, 20), cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255, 255), 2)
 
     # cv2.imshow("Gray", gray)
-    cv2.imshow("Binary", binary)
+    #cv2.imshow("Binary", binary)
     cv2.imshow("Frame", frame)
 
     key = cv2.waitKey(1) & 0xFF
