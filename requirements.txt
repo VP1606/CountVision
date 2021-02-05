@@ -1,0 +1,5 @@
+numpy~=1.19.5
+imutils~=0.5.4
+opencv-python~=4.5.1.48
+setuptools~=52.0.0
+cvlib~=0.2.6
