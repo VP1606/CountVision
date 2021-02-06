@@ -20,19 +20,24 @@ class Ui(QtWidgets.QMainWindow):
             self.runModeDisplay.setText("TRAIN")
 
     def startSys(self):
-        if self.startBtn.text() == "START":
-            self.running = True
-            print("START PRESS")
 
-            self.startBtn.setText("STOP")
-            UI_Adapter.RUN(self.count, self)
+        if self.runMode == "NORMAL":
+            if self.startBtn.text() == "START":
+                self.running = True
+                print("START PRESS")
 
-        elif self.startBtn.text() == "STOP":
-            self.running = False
-            print("STOP PRESS")
+                self.startBtn.setText("STOP")
+                UI_Adapter.RUN(self.count, self)
 
-            self.startBtn.setText("START")
-            Controller().press('q')
+            elif self.startBtn.text() == "STOP":
+                self.running = False
+                print("STOP PRESS")
+
+                self.startBtn.setText("START")
+                Controller().press('q')
+
+        else:
+            print("TRAIN NOT SET YET...")
 
     def resetAction(self):
         if self.running is False:
@@ -40,7 +45,8 @@ class Ui(QtWidgets.QMainWindow):
             self.countText.setText(str(self.count))
 
     def saveAction(self):
-        print("SAVE")
+        if self.running == False:
+            print("SAVE")
 
 
     def __init__(self):
