@@ -3,3 +3,5 @@ imutils~=0.5.4
 opencv-python~=4.5.1.48
 setuptools~=52.0.0
 cvlib~=0.2.6
+PyQt5~=5.15.2
+pynput~=1.7.2
