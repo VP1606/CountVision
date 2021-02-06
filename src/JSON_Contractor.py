@@ -9,3 +9,15 @@ def LoadConfig():
 def VersionDetail():
     data = LoadConfig()
     return data["RunUI_Version"]
+
+def DeltaRead():
+    data = LoadConfig()
+    min = float(data["CV_Delta_MIN"])
+    max = float(data["CV_Delta_MAX"])
+
+    result = {
+        "min": min,
+        "max": max
+    }
+
+    return result

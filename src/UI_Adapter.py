@@ -3,6 +3,7 @@ def RUN(count, UI):
     import cv2
     from urllib.request import urlopen
     from dataclasses import dataclass
+    import JSON_Contractor
 
     url = "http://192.168.0.155:8080/shot.jpg?rnd=955360"
 
@@ -22,8 +23,8 @@ def RUN(count, UI):
 
     ID_Count = 0
 
-    deltaMin = 1
-    deltaMax = 15
+    deltaMin = JSON_Contractor.DeltaRead()["min"]
+    deltaMax = JSON_Contractor.DeltaRead()["max"]
 
     def ValidContourCount(cnts):
         count = 0
