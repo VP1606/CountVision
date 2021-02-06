@@ -2,12 +2,15 @@ import sys
 from PyQt5 import QtWidgets, uic
 from pynput.keyboard import Controller
 import UI_Adapter
+import JSON_Contractor
 
-class Ui(QtWidgets.QMainWindow):
+class RunUI(QtWidgets.QMainWindow):
 
     runMode = "NORMAL"
     running = False
     count = 0
+
+    version = JSON_Contractor.VersionDetail()
 
     def normalSelect(self):
         if self.running is False and self.runMode != "NORMAL":
@@ -21,7 +24,7 @@ class Ui(QtWidgets.QMainWindow):
 
     def startSys(self):
 
-        if self.runMode == "NORMAL":
+        if self.runModeDisplay.text() == "NORMAL":
             if self.startBtn.text() == "START":
                 self.running = True
                 print("START PRESS")
@@ -43,6 +46,7 @@ class Ui(QtWidgets.QMainWindow):
         if self.running is False:
             self.count = 0
             self.countText.setText(str(self.count))
+        JSON_Contractor.VersionDetail()
 
     def saveAction(self):
         if self.running == False:
@@ -50,11 +54,12 @@ class Ui(QtWidgets.QMainWindow):
 
 
     def __init__(self):
-        super(Ui, self).__init__() # Call the inherited classes __init__ method
+        super(RunUI, self).__init__() # Call the inherited classes __init__ method
         uic.loadUi('runUI.ui', self) # Load the .ui file
 
         self.countText.setText(str(self.count))
         self.runModeDisplay.setText("NORMAL")
+        self.versionString.setText(str(self.version))
 
         self.resetBtn.clicked.connect(self.resetAction)
         self.startBtn.clicked.connect(self.startSys)
@@ -69,5 +74,5 @@ class Ui(QtWidgets.QMainWindow):
 
 
 app = QtWidgets.QApplication(sys.argv) # Create an instance of QtWidgets.QApplication
-window = Ui() # Create an instance of our class
+window = RunUI() # Create an instance of our class
 app.exec_() # Start the application
