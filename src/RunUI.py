@@ -3,12 +3,16 @@ from PyQt5 import QtWidgets, uic
 from pynput.keyboard import Controller
 import UI_Adapter
 import JSON_Contractor
+from datetime import datetime
 
 class RunUI(QtWidgets.QMainWindow):
 
     runMode = "NORMAL"
     running = False
     count = 0
+
+    startTime = ""
+    endTime = ""
 
     version = JSON_Contractor.VersionDetail()
 
@@ -29,6 +33,10 @@ class RunUI(QtWidgets.QMainWindow):
                 self.running = True
                 print("START PRESS")
 
+                now = datetime.now()
+                self.startTime = now.strftime("%d/%m/%Y %H:%M:%S")
+                print("Start Date: " + self.startTime)
+
                 self.startBtn.setText("STOP")
                 UI_Adapter.RUN(self.count, self)
 
@@ -39,6 +47,10 @@ class RunUI(QtWidgets.QMainWindow):
                 self.startBtn.setText("START")
                 Controller().press('q')
 
+                now = datetime.now()
+                self.endTime = now.strftime("%d/%m/%Y %H:%M:%S")
+                print("End Date: " + self.endTime)
+
         else:
             print("TRAIN NOT SET YET...")
 
@@ -46,7 +58,8 @@ class RunUI(QtWidgets.QMainWindow):
         if self.running is False:
             self.count = 0
             self.countText.setText(str(self.count))
-        JSON_Contractor.VersionDetail()
+            self.startTime = ""
+            self.endTime = ""
 
     def saveAction(self):
         if self.running == False:
