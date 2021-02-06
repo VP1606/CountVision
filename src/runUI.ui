@@ -70,8 +70,8 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>200</y>
-      <width>731</width>
+      <y>190</y>
+      <width>742</width>
       <height>159</height>
      </rect>
     </property>
@@ -159,6 +159,42 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="saveBtn">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>10</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Gotham</family>
+           <pointsize>20</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>SAVE</string>
+         </property>
+         <property name="autoDefault">
+          <bool>true</bool>
+         </property>
+         <property name="default">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>
@@ -171,7 +207,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>350</width>
+         <width>250</width>
          <height>20</height>
         </size>
        </property>
@@ -253,7 +289,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="runModeDisplay">
          <property name="font">
           <font>
            <family>Gotham</family>
