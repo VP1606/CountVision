@@ -2,7 +2,7 @@
   "RunUI_Version" : "2021.05.01",
   "CountSys_Version" : "2021.04.05",
 
-  "CSV_Directory" : "~/Desktop",
+  "CSV_Directory" : "/users/vpremakantha/Desktop",
 
   "CV_Delta_MIN" : 1.0,
   "CV_Delta_MAX" : 15.0

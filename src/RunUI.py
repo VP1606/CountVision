@@ -4,6 +4,9 @@ from pynput.keyboard import Controller
 import UI_Adapter
 import JSON_Contractor
 from datetime import datetime
+import csv
+import os.path
+from os import path
 
 class RunUI(QtWidgets.QMainWindow):
 
@@ -65,6 +68,34 @@ class RunUI(QtWidgets.QMainWindow):
         if self.running == False:
             print("SAVE")
 
+            directory = JSON_Contractor.CSV_Target() + "/CountVision_Records.csv"
+
+            exists = path.exists(directory)
+
+            if exists is True:
+                print("Directory Exists!")
+            else:
+                print("Directory doesn't exist.")
+
+            try:
+                with open(directory, 'a', newline='') as file:
+                    fields = ["Start Time", "End Time", "Count"]
+                    writer = csv.DictWriter(file, fieldnames=fields)
+
+                    if exists is False:
+                        writer.writeheader()
+
+                    writer.writerow({
+                        'Start Time': self.startTime,
+                        "End Time": self.endTime,
+                        "Count": self.countText.text()
+                    })
+
+            except:
+                print("CSV ERROR")
+
+            else:
+                print("SUCCESS")
 
     def __init__(self):
         super(RunUI, self).__init__() # Call the inherited classes __init__ method

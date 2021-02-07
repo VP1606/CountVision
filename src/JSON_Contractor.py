@@ -21,3 +21,8 @@ def DeltaRead():
     }
 
     return result
+
+def CSV_Target():
+    data = LoadConfig()
+    directory = data["CSV_Directory"]
+    return directory
