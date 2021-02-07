@@ -99,7 +99,7 @@ class RunUI(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(RunUI, self).__init__() # Call the inherited classes __init__ method
-        uic.loadUi('runUI.ui', self) # Load the .ui file
+        uic.loadUi('./runUI.ui', self) # Load the .ui file
 
         self.countText.setText(str(self.count))
         self.runModeDisplay.setText("NORMAL")
