@@ -6,27 +6,53 @@
 
 **CountVision** is a computer vision system, for counting how many subjects pass a particular point in realtime using python and OpenCV. 
 
+## About
+
+- Current Version: **2021.05.02e**
+- Developed by **VARCO**
+- **E CODE: Experimental** internal build - for **Testing Usage only.**
+
 ## Install
 
 #### Baseline Requirements
 
-- **Python** - Python3+ is recommended.
+- **Python 3** - Python3.8+ is recommended.
 - **PIP is required for installing dependencies.**
 
-#### Installation
+### AIS Install (Recommended)
 
-First, install this with **pip** via **Git** Ensure the filepath does not contain folders with spaces - **this will fail the installation.**
+This is the **Automated Install System**. 
+*Note: A virtual environment will be created.*
+
+#### Get the AIS Script
+
+- If running **MacOS**, download the ```AIS_MAC.zsh``` script, and place in the directory you want to install CountVision into.
+
+#### Run the script
+
+**MacOS**
+```shell
+./AIS_MAC.zsh
 ```
-python -m pip install git+ FILL WHEN RELEASING.
+
+#### Manual Installation
+
+First, clone this git repository into the location you want it to be saved to. Ensure the filepath does not contain folders with spaces - **this will fail the installation.**
+```shell
+git clone -b release/2021.05.02e --single-branch https://github.com/VP1606/CountVision.git
 ```
 
 **Enter the CountVision Folder.**
-```
+```shell
 cd CountVision
+```
+Install dependencies.
+```shell
+pip install -e .
 ```
 
 Run **prepare.py**
-```
+```shell
 python prepare.py
 ```
 
@@ -36,13 +62,9 @@ You should now get a desktop icon - use this to run the app.
 
 ## Running
 
-1. Using the desktop icon.
-2. Via source file (Run command from **CountVision** folder) :
-```
-python src/RunUI.py
+1. Using the icon.
+2. Via source file (Run command from **CountVision/src** folder) :
+```shell
+python3 RunUI.py
 ```
 
-## About
-
--  Current Version: **2021.05.01**
-- Developed by **VARCO**
