@@ -4,7 +4,12 @@ import os
 def LoadConfig():
 
     cwd = os.getcwd()
-    jsonDir = str(cwd) + "/config.json"
+    cwdUse = str(cwd)
+
+    if cwdUse.__contains__("src"):
+        cwdUse = cwdUse[0 : (len(cwdUse) - 1 - 3)]
+
+    jsonDir = str(cwdUse) + "/config.json"
 
     with open(jsonDir) as f:
         data = json.load(f)
