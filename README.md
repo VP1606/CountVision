@@ -24,13 +24,14 @@
 This is the **Automated Install System**. 
 *Note: A virtual environment will be created.*
 
-#### Get the AIS Script
-
-- If running **MacOS**, download the ```AIS_MAC.zsh``` script, and place in the directory you want to install CountVision into.
-
-#### Run the script
-
 **MacOS**
+
+Make script **executable**.
+```shell
+chmod +x ./AIS_MAC.zsh
+```
+
+**Run script.**
 ```shell
 ./AIS_MAC.zsh
 ```
