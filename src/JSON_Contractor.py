@@ -1,7 +1,12 @@
 import json
+import os
 
 def LoadConfig():
-    with open("../config.json") as f:
+
+    cwd = os.getcwd()
+    jsonDir = str(cwd) + "/config.json"
+
+    with open(jsonDir) as f:
         data = json.load(f)
         return data
 
@@ -26,3 +31,5 @@ def CSV_Target():
     data = LoadConfig()
     directory = data["CSV_Directory"]
     return directory
+
+LoadConfig()
