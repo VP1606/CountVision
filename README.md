@@ -1,7 +1,6 @@
 <span align="center">
 
 # CountVision
-###2021.05.01
 
 </span>
 
@@ -42,3 +41,8 @@ You should now get a desktop icon - use this to run the app.
 ```
 python src/RunUI.py
 ```
+
+## About
+
+-  Current Version: **2021.05.01**
+- Developed by **VARCO**
