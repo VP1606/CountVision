@@ -6,6 +6,7 @@ echo "--- Automated Install Sequence for MACOS -------"
 echo "------------------------------------------------"
 
 pip3 install virtualenv
+sudo /usr/bin/easy_install virtualenv
 
 echo "Creating Virtual Run Environment (2/6)"
 virtualenv venv
