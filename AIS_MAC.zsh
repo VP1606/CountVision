@@ -6,7 +6,7 @@ echo "--- Automated Install Sequence for MACOS -------"
 echo "------------------------------------------------"
 
 echo "Creating Virtual Run Environment (2/6)"
-python3 -m venv
+python3 -m venv ./
 
 echo "Entering VENV (3/6)"
 source venv/bin/activate
