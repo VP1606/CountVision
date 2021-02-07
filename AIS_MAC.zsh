@@ -5,11 +5,8 @@ echo "----------- COUNTVISION 2021.05.02e ------------"
 echo "--- Automated Install Sequence for MACOS -------"
 echo "------------------------------------------------"
 
-pip3 install virtualenv
-sudo /usr/bin/easy_install virtualenv
-
 echo "Creating Virtual Run Environment (2/6)"
-virtualenv venv
+python3 -m venv
 
 echo "Entering VENV (3/6)"
 source venv/bin/activate
