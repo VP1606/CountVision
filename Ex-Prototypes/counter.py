@@ -7,7 +7,7 @@ from urllib.request import urlopen
 url = "http://192.168.0.155:8080/shot.jpg?rnd=955360"
 
 avg = None
-video = cv2.VideoCapture("./testH.mp4")
+video = cv2.VideoCapture("./testJ.mp4")
 xvalues = list()
 motion = list()
 count1 = 0
