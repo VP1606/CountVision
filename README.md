@@ -8,7 +8,7 @@
 
 ## About
 
-- Current Version: **2021.05.02e**
+- Current Version: **2021.06.01**
 - Developed by **VARCO**
 - **E CODE: Experimental** internal build - for **Testing Usage only.**
 
@@ -57,9 +57,7 @@ Run **prepare.py**
 python prepare.py
 ```
 
-When prompted, enter the **full directory** of where you want the CSV file to be generated.
-
-You should now get a desktop icon - use this to run the app.
+When prompted, enter the **full directory** of where you want the CSV file to be generated. Or, hit **ENTER** to save to the current folder.
 
 ## Running
 
