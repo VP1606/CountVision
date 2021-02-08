@@ -12,7 +12,7 @@ echo "Entering VENV 🔑"
 source venv/bin/activate
 
 echo "Cloning Version 2021.06.01 📂"
-git clone -b release/2021.06.01 --single-branch https://github.com/VP1606/CountVision.git
+git clone -b 2021.06.01 --single-branch https://github.com/VP1606/CountVision.git
 
 cd CountVision
 
