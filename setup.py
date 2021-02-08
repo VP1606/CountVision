@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='CountVision',
-    version='2021.05.01',
+    version='2021.06.01',
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     install_requires=['numpy', 'imutils', 'opencv-python', 'setuptools', 'cvlib', 'PyQt5', 'pynput', 'pyshortcuts', 'opencv-contrib-python'],

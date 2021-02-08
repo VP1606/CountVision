@@ -10,7 +10,6 @@
 
 - Current Version: **2021.06.01**
 - Developed by **VARCO**
-- **E CODE: Experimental** internal build - for **Testing Usage only.**
 
 ## Install
 
@@ -40,7 +39,7 @@ chmod +x ./AIS_MAC.zsh
 
 First, clone this git repository into the location you want it to be saved to. Ensure the filepath does not contain folders with spaces - **this will fail the installation.**
 ```shell
-git clone -b release/2021.05.02e --single-branch https://github.com/VP1606/CountVision.git
+git clone -b release/2021.06.01 --single-branch https://github.com/VP1606/CountVision.git
 ```
 
 **Enter the CountVision Folder.**

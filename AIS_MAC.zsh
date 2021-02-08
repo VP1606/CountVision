@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 echo "------------------------------------------------"
-echo "----------- COUNTVISION 2021.05.02e ------------"
+echo "----------- COUNTVISION 2021.06.01 ------------"
 echo "--⚡ Automated Install Sequence for MACOS ⚡------"
 echo "------------------------------------------------"
 
@@ -11,8 +11,8 @@ python3 -m venv ./venv
 echo "Entering VENV 🔑"
 source venv/bin/activate
 
-echo "Cloning Version 2021.05.02e 📂"
-git clone -b release/2021.05.02e --single-branch https://github.com/VP1606/CountVision.git
+echo "Cloning Version 2021.06.01 📂"
+git clone -b release/2021.06.01 --single-branch https://github.com/VP1606/CountVision.git
 
 cd CountVision
 
