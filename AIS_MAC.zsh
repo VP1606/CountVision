@@ -2,7 +2,7 @@
 
 echo "------------------------------------------------"
 echo "----------- COUNTVISION 2021.05.02e ------------"
-echo "--- Automated Install Sequence for MACOS -------"
+echo "--⚡ Automated Install Sequence for MACOS ⚡------"
 echo "------------------------------------------------"
 
 echo "Creating Virtual Run Environment 💻"
