@@ -7,7 +7,7 @@
   "CV_Delta_MIN" : 1.0,
   "CV_Delta_MAX" : 15.0,
 
-  "IP_ADDR" : "http://192.168.0.155:8080/shot.jpg?rnd=955360",
+  "IP_ADDR" : "http://192.168.0.155:8080/video",
   "WEBCAM_PORT" : 0,
-  "CAM_MODE" : "VIDEO"
+  "CAM_MODE" : "IP"
 }

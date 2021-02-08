@@ -5,9 +5,28 @@ def RUN(count, UI):
     from dataclasses import dataclass
     import JSON_Contractor
 
-    url = "http://192.168.0.155:8080/shot.jpg?rnd=955360"
-
     video = cv2.VideoCapture("./testJ.mp4")
+
+    mode = JSON_Contractor.VideoMode()
+    print(mode)
+
+    if mode == "VIDEO":
+        print("VIDEO MODE")
+        video = cv2.VideoCapture("./testJ.mp4")
+
+    elif mode == "WEBCAM":
+        print("WEBCAM MODE")
+        port = JSON_Contractor.CamPort()
+        video = cv2.VideoCapture(port)
+
+    elif mode == "IP":
+        print("IP MODE")
+        IP_Address = JSON_Contractor.IP_URLPull()
+        video = cv2.VideoCapture(IP_Address)
+
+    else:
+        print("Defaulting to VIDEO MODE")
+        video = cv2.VideoCapture("./testJ.mp4")
 
     #count = 0
 

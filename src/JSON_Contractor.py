@@ -55,8 +55,4 @@ def CamPort():
 def VideoMode():
     data = LoadConfig()
     mode = data["CAM_MODE"]
-
-    if mode != "VIDEO" or mode != "IP" or mode != "WEBCAM":
-        mode = "VIDEO"
-
     return mode
