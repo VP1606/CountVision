@@ -1,13 +1,13 @@
 import json
 import os
 
-def LoadConfig():
 
+def LoadConfig():
     cwd = os.getcwd()
     cwdUse = str(cwd)
 
     if cwdUse.__contains__("src"):
-        cwdUse = cwdUse[0 : (len(cwdUse) - 1 - 3)]
+        cwdUse = cwdUse[0: (len(cwdUse) - 1 - 3)]
 
     jsonDir = str(cwdUse) + "/config.json"
 
@@ -19,6 +19,7 @@ def LoadConfig():
 def VersionDetail():
     data = LoadConfig()
     return data["RunUI_Version"]
+
 
 def DeltaRead():
     data = LoadConfig()
@@ -32,9 +33,30 @@ def DeltaRead():
 
     return result
 
+
 def CSV_Target():
     data = LoadConfig()
     directory = data["CSV_Directory"]
     return directory
 
-LoadConfig()
+
+def IP_URLPull():
+    data = LoadConfig()
+    url = data["IP_ADDR"]
+    return url
+
+def CamPort():
+    data = LoadConfig()
+    raw = data["WEBCAM_PORT"]
+    casted = int(raw)
+    return casted
+
+
+def VideoMode():
+    data = LoadConfig()
+    mode = data["CAM_MODE"]
+
+    if mode != "VIDEO" or mode != "IP" or mode != "WEBCAM":
+        mode = "VIDEO"
+
+    return mode
