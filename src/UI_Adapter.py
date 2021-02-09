@@ -199,16 +199,11 @@ def RUN(count, UI):
                     continue
                     # cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 23), 2)
 
-        ft = cv2.freetype.createFreeType2()
-        ft.loadFontData(fontFileName='GothamBold.ttf', id=0)
-
         cv2.line(frame, (400, 0), (400, 1000), (0, 255, 0), 2)
-        ft.putText(img=frame, text="CAPRA LAKE COUNT VISION 2021.04.05", org=(10, 20), fontHeight=12,
-                   color=(255, 255, 255), thickness=-1, line_type=cv2.LINE_AA, bottomLeftOrigin=True)
-        ft.putText(img=frame, text="COUNT", org=(10, 100), fontHeight=20, color=(255, 255, 255), thickness=-1,
-                   line_type=cv2.LINE_AA, bottomLeftOrigin=True)
-        ft.putText(img=frame, text=str(count), org=(100, 100), fontHeight=50, color=(255, 255, 255), thickness=-1,
-                   line_type=cv2.LINE_AA, bottomLeftOrigin=True)
+
+        cv2.putText(frame, "CAPRA LAKE COUNT VISION 2021.04.05", (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 2)
+        cv2.putText(frame, "COUNT", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        cv2.putText(frame, "{}".format(str(count)), (100, 100), cv2.FONT_HERSHEY_DUPLEX, 1.5, (255, 255, 255), 2)
 
         # cv2.line(binary, (400, 0), (400, 1000), (255, 255, 255), 2)
         # cv2.putText(binary, "CAPRA LAKE COUNT VISION 2021.04.05", (10, 20), cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255, 255), 2)
