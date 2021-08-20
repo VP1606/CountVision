@@ -189,6 +189,12 @@ def RUN(count, UI):
                     count += 1
                     UI.countText.setText(str(count))
 
+                    import websender
+                    import asyncio
+                    asyncio.get_event_loop().run_until_complete(websender.send_json({
+                        "count": count
+                    }))
+
 
                 else:
                     posDelta = 400 - centreX

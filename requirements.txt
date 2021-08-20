@@ -5,3 +5,4 @@ setuptools~=52.0.0
 cvlib~=0.2.6
 PyQt5~=5.15.2
 pynput~=1.7.2
+websockets~=9.1
