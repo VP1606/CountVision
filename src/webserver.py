@@ -1,6 +1,7 @@
 # Importing the relevant libraries
 import websockets
 import asyncio
+import os
 
 # Server data
 PORT = 8765
@@ -18,6 +19,10 @@ async def echo(websocket, path):
     try:
         async for message in websocket:
             print("Received message from client: " + message)
+
+            if message == "pandora-autostart":
+                os.popen("python RunUI.py --auto")
+
             # Send a response to all connected clients except sender
             for conn in connected:
                 if conn != websocket:
