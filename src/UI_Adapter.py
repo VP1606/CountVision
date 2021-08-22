@@ -4,15 +4,17 @@ def RUN(count, UI):
     from urllib.request import urlopen
     from dataclasses import dataclass
     import JSON_Contractor
+    import websender
+    import asyncio
 
-    video = cv2.VideoCapture("./testJ.mp4")
+    video = cv2.VideoCapture("./testH.mp4")
 
     mode = JSON_Contractor.VideoMode()
     print(mode)
 
     if mode == "VIDEO":
         print("VIDEO MODE")
-        video = cv2.VideoCapture("./testJ.mp4")
+        video = cv2.VideoCapture("./testH.mp4")
 
     elif mode == "WEBCAM":
         print("WEBCAM MODE")
@@ -26,7 +28,7 @@ def RUN(count, UI):
 
     else:
         print("Defaulting to VIDEO MODE")
-        video = cv2.VideoCapture("./testJ.mp4")
+        video = cv2.VideoCapture("./testH.mp4")
 
     #count = 0
 
@@ -67,6 +69,8 @@ def RUN(count, UI):
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
+        (frame_h, frame_w, _) = frame.shape
+
         _, binary = cv2.threshold(gray, 40, 255, cv2.THRESH_BINARY_INV)
 
         (cnts, _) = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -85,6 +89,7 @@ def RUN(count, UI):
                 tolerance = 4
 
                 centreX = x + (w / 2)
+                centreY = y + (h / 2)
 
                 movingRight = False
 
@@ -183,14 +188,18 @@ def RUN(count, UI):
                                 (x, y - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
+                (yOffset, progress) = sendablePosition(frame_w, frame_h, centreX, centreY, )
+                asyncio.get_event_loop().run_until_complete(websender.send_json({
+                    "y_offset": yOffset,
+                    "progress": progress
+                }))
+
                 if (400 - tolerance) <= centreX <= (400 + tolerance):
                     print("POS CONTACT! XVAL: " + str(x) + " TOTAL: " + str(count))
                     # cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
                     count += 1
                     UI.countText.setText(str(count))
 
-                    import websender
-                    import asyncio
                     asyncio.get_event_loop().run_until_complete(websender.send_json({
                         "count": count
                     }))
@@ -224,3 +233,14 @@ def RUN(count, UI):
 
     # video.release()
     cv2.destroyAllWindows()
+
+def sendablePosition(frame_w, frame_h, centreX, centreY):
+    #ROI is on X=400
+    y_offset = centreY - (frame_h / 2)
+    y_offset_relative = y_offset / frame_h
+    progress = centreX / 400
+
+    if progress > 1:
+        progress = 1.0
+
+    return (y_offset_relative, progress)
