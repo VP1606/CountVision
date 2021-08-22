@@ -188,10 +188,11 @@ def RUN(count, UI):
                                 (x, y - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
-                (yOffset, progress) = sendablePosition(frame_w, frame_h, centreX, centreY, )
+                (yOffset, progress, color_string) = sendablePosition(frame_w, frame_h, centreX, centreY, accentColor)
                 asyncio.get_event_loop().run_until_complete(websender.send_json({
                     "y_offset": yOffset,
-                    "progress": progress
+                    "progress": progress,
+                    "color": color_string
                 }))
 
                 if (400 - tolerance) <= centreX <= (400 + tolerance):
@@ -234,7 +235,7 @@ def RUN(count, UI):
     # video.release()
     cv2.destroyAllWindows()
 
-def sendablePosition(frame_w, frame_h, centreX, centreY):
+def sendablePosition(frame_w, frame_h, centreX, centreY, color):
     #ROI is on X=400
     y_offset = centreY - (frame_h / 2)
     y_offset_relative = y_offset / frame_h
@@ -243,4 +244,15 @@ def sendablePosition(frame_w, frame_h, centreX, centreY):
     if progress > 1:
         progress = 1.0
 
-    return (y_offset_relative, progress)
+    color_str = ""
+
+    if color == (0, 115, 255):
+        color_str = "orange"
+
+    elif color == (255, 0, 208):
+        color_str = "purple"
+
+    else:
+        color_str = "red"
+
+    return (y_offset_relative, progress, color_str)
