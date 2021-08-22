@@ -198,7 +198,12 @@ def RUN(count, UI):
                 if (400 - tolerance) <= centreX <= (400 + tolerance):
                     print("POS CONTACT! XVAL: " + str(x) + " TOTAL: " + str(count))
                     # cv2.rectangle(frame, (x, y), (x + w, y + h), (119, 3, 252), 2)
-                    count += 1
+
+                    if movingRight:
+                        count += 1
+                    else:
+                        count -= 1
+
                     UI.countText.setText(str(count))
 
                     asyncio.get_event_loop().run_until_complete(websender.send_json({
