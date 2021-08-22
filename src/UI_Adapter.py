@@ -67,9 +67,9 @@ def RUN(count, UI):
 
         if frame is None:
             print("END!")
-            websender.send_json({
+            asyncio.get_event_loop().run_until_complete(websender.send_json({
                 "end": "true"
-            })
+            }))
 
         frame = imutils.resize(frame, width=500)
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
