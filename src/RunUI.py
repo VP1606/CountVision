@@ -7,6 +7,7 @@ from datetime import datetime
 import csv
 import os.path
 from os import path
+import sys
 
 class RunUI(QtWidgets.QMainWindow):
 
@@ -119,4 +120,9 @@ class RunUI(QtWidgets.QMainWindow):
 
 app = QtWidgets.QApplication(sys.argv) # Create an instance of QtWidgets.QApplication
 window = RunUI() # Create an instance of our class
+
+if sys.argv.__contains__("--auto"):
+    print("----- AUTOSTART -----")
+    window.startSys()
+
 app.exec_() # Start the application
