@@ -65,6 +65,12 @@ def RUN(count, UI):
         # flag = True
         # text = ""
 
+        if frame is None:
+            print("END!")
+            websender.send_json({
+                "end": "true"
+            })
+
         frame = imutils.resize(frame, width=500)
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
