@@ -68,7 +68,7 @@ def RUN(count, UI):
         if frame is None:
             print("END!")
             asyncio.get_event_loop().run_until_complete(websender.send_json({
-                "end": "true"
+                "end": "yes"
             }))
 
         frame = imutils.resize(frame, width=500)
