@@ -20,8 +20,8 @@ async def echo(websocket, path):
         async for message in websocket:
             print("Received message from client: " + message)
 
-            if message == "pandora-autostart":
-                os.popen("python RunUI.py --auto")
+            # if message == "pandora-autostart":
+            #     os.popen("python RunUI.py --auto")
 
             # Send a response to all connected clients except sender
             for conn in connected:
@@ -34,6 +34,6 @@ async def echo(websocket, path):
         connected.remove(websocket)
 
 # Start the server
-start_server = websockets.serve(echo, "192.168.1.76", PORT)
+start_server = websockets.serve(echo, "192.168.1.79", PORT)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
