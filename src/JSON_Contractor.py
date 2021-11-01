@@ -56,3 +56,20 @@ def VideoMode():
     data = LoadConfig()
     mode = data["CAM_MODE"]
     return mode
+
+def SetData(key, val):
+    cwd = os.getcwd()
+    cwdUse = str(cwd)
+
+    if cwdUse.__contains__("src"):
+        cwdUse = cwdUse[0: (len(cwdUse) - 1 - 3)]
+
+    jsonDir = str(cwdUse) + "/config.json"
+
+    with open(jsonDir,"r+") as f:
+        data = json.load(f)
+
+    with open(jsonDir,"w+") as f:
+        data[key] = val
+        f.write(json.dumps(data))
+    
