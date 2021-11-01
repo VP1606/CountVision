@@ -7,7 +7,7 @@ import websockets
 
 async def send_json(book):
     json_string = json.dumps(book)
-    async with websockets.connect("ws://192.168.1.79:8765") as websocket:
+    async with websockets.connect("ws://172.20.10.4:8765") as websocket:
         await websocket.send(str(json_string))
 
 #

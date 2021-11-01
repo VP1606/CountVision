@@ -194,11 +194,14 @@ def RUN(count, UI):
                                 (x, y - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
-                (yOffset, progress, color_string) = sendablePosition(frame_w, frame_h, centreX, centreY, accentColor)
+                (yOffset, progress, color_string, width_rel, height_rel) = sendablePosition(frame_w, frame_h, centreX, centreY, accentColor, w, h)
                 asyncio.get_event_loop().run_until_complete(websender.send_json({
                     "y_offset": yOffset,
                     "progress": progress,
-                    "color": color_string
+                    "color": color_string,
+                    "id": contourID,
+                    "width": width_rel,
+                    "height": height_rel
                 }))
 
                 if (400 - tolerance) <= centreX <= (400 + tolerance):
@@ -238,6 +241,7 @@ def RUN(count, UI):
         # cv2.imshow("Gray", gray)
         # cv2.imshow("Binary", binary)
         cv2.imshow("Frame", frame)
+        cv2.imshow("Binary", binary)
 
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
@@ -246,14 +250,11 @@ def RUN(count, UI):
     # video.release()
     cv2.destroyAllWindows()
 
-def sendablePosition(frame_w, frame_h, centreX, centreY, color):
+def sendablePosition(frame_w, frame_h, centreX, centreY, color, width, height):
     #ROI is on X=400
     y_offset = centreY - (frame_h / 2)
     y_offset_relative = y_offset / frame_h
     progress = centreX / 400
-
-    if progress > 1:
-        progress = 1.0
 
     color_str = ""
 
@@ -266,4 +267,7 @@ def sendablePosition(frame_w, frame_h, centreX, centreY, color):
     else:
         color_str = "red"
 
-    return (y_offset_relative, progress, color_str)
+    width_rel = height / frame_h
+    height_rel = width / frame_w
+
+    return (y_offset_relative, progress, color_str, width_rel, height_rel)
