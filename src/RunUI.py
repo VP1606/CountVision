@@ -114,6 +114,9 @@ class RunUI(QtWidgets.QMainWindow):
         self.normalBtn.clicked.connect(self.normalSelect)
         self.trainBtn.clicked.connect(self.trainSelect)
 
+        self.IP.setText(JSON_Contractor.LoadConfig()["SOCKET_IP"])
+        self.Port.setText(JSON_Contractor.LoadConfig()["SOCKET_PORT"])
+
         self.show() # Show the GUI
 
 
