@@ -1,1 +1,1 @@
-{"RunUI_Version": "2021.44.01", "CountSys_Version": "2021.33.02", "CSV_Directory": "/users/vpremakantha/Desktop", "CV_Delta_MIN": 1.0, "CV_Delta_MAX": 15.0, "IP_ADDR": "http://192.168.0.155:8080/video", "WEBCAM_PORT": 0, "CAM_MODE": "VIDEO", "SOCKET_IP": "127.0.0.1", "SOCKET_PORT": "8080"}
+{"RunUI_Version": "2021.44.02", "CountSys_Version": "2021.33.02", "CSV_Directory": "/users/vpremakantha/Desktop", "CV_Delta_MIN": 1.0, "CV_Delta_MAX": 15.0, "IP_ADDR": "http://192.168.0.155:8080/video", "WEBCAM_PORT": 0, "CAM_MODE": "VIDEO", "SOCKET_IP": "127.0.0.1", "SOCKET_PORT": "8080"}
